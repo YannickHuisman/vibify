@@ -1,1 +1,1 @@
-export { type DiscoveryResult, useDiscovery } from './useDiscovery';
+export { useDiscovery } from './useDiscovery';

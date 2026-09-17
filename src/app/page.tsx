@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 
-import { FlexCol } from '@components/Flex';
+import { Chip } from '@components/Chip';
+import { FlexCol, FlexRow } from '@components/Flex';
 import { Heading } from '@components/Heading';
 import { MoodChips } from '@components/MoodChips';
 import { Paragraph } from '@components/Paragraph';
@@ -13,6 +14,7 @@ import { useDiscovery } from '@hooks/discovery/useDiscovery';
 
 export default function DiscoverPage() {
   const [prompt, setPrompt] = useState('');
+  const [mock, setMock] = useState(process.env.NEXT_PUBLIC_SPOTIFY_MOCK_SEARCH === 'true');
   const { outcome, isLoading, error, submit } = useDiscovery();
 
   const handleMoodSelect = (mood: string) => {
@@ -29,8 +31,19 @@ export default function DiscoverPage() {
       </FlexCol>
 
       <PromptToolbar $gap="sm">
-        <PromptForm value={prompt} onChange={setPrompt} onSubmit={submit} />
+        <PromptForm value={prompt} onChange={setPrompt} onSubmit={(value) => submit(value, mock)} />
         <MoodChips value={prompt} onSelect={handleMoodSelect} />
+        <FlexRow>
+          <Chip
+            as="button"
+            type="button"
+            $active={mock}
+            aria-pressed={mock}
+            onClick={() => setMock(!mock)}
+          >
+            {mock ? 'mock search on' : 'mock search off'}
+          </Chip>
+        </FlexRow>
       </PromptToolbar>
 
       {isLoading && <TracklistSkeleton />}

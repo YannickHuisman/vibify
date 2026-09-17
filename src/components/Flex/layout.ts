@@ -1,5 +1,6 @@
 import { css } from 'styled-components';
 
+import { belowMobile } from '@/mixins';
 import type { Theme } from '@/theme';
 
 export interface LayoutProps {
@@ -8,6 +9,7 @@ export interface LayoutProps {
   $justify?: string;
   $wrap?: boolean;
   $minWidth?: string;
+  $hideBelowMobile?: boolean;
 }
 
 export const layoutStyles = css<LayoutProps>`
@@ -16,4 +18,11 @@ export const layoutStyles = css<LayoutProps>`
   ${({ $justify }) => $justify && `justify-content: ${$justify};`}
   ${({ $wrap }) => $wrap && 'flex-wrap: wrap;'}
   ${({ $minWidth }) => $minWidth && `min-width: ${$minWidth};`}
+  ${({ $hideBelowMobile }) =>
+    $hideBelowMobile &&
+    `
+      ${belowMobile} {
+        display: none;
+      }
+    `}
 `;

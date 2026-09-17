@@ -26,9 +26,6 @@ export const StyledPromptControl = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow:
-      ${({ theme }) => theme.shadows.cardHover},
-      0 0 0 2px ${({ theme }) => theme.colors.orange};
   }
 `;
 

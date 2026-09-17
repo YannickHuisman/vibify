@@ -8,16 +8,15 @@ import { MoodChips } from '@components/MoodChips';
 import { Paragraph } from '@components/Paragraph';
 import { PromptForm } from '@components/PromptForm';
 import { PromptToolbar } from '@components/PromptToolbar';
-import { RawResponse } from '@components/RawResponse';
+import { Tracklist, TracklistSkeleton } from '@components/Tracklist';
 import { useDiscovery } from '@hooks/discovery/useDiscovery';
 
 export default function DiscoverPage() {
   const [prompt, setPrompt] = useState('');
-  const { result, isLoading, error, submit } = useDiscovery();
-  const isIdle = !isLoading && !error && !result;
+  const { outcome, isLoading, error, submit } = useDiscovery();
 
   const handleMoodSelect = (mood: string) => {
-    setPrompt((current) => (current.length === 0 ? mood : `${current}, ${mood}`));
+    setPrompt((current) => (current.length === 0 ? mood : `${current} ${mood}`));
   };
 
   return (
@@ -34,10 +33,22 @@ export default function DiscoverPage() {
         <MoodChips value={prompt} onSelect={handleMoodSelect} />
       </PromptToolbar>
 
-      {isLoading && <Paragraph $color="muted">Searching Spotify...</Paragraph>}
-      {error && <Paragraph $color="muted">{error}</Paragraph>}
-      {result && <RawResponse data={result} label="Spotify search result" />}
-      {isIdle && <Paragraph $color="muted">Submit a prompt to search Spotify.</Paragraph>}
+      {isLoading && <TracklistSkeleton />}
+      {!isLoading && error && <Paragraph $color="muted">{error}</Paragraph>}
+      {!isLoading && outcome?.status === 'rejected' && (
+        <Paragraph $color="muted">{outcome.message}</Paragraph>
+      )}
+      {!isLoading && outcome?.status === 'ok' && outcome.tracks.length > 0 && (
+        <>
+          <Paragraph $color="muted">{outcome.reasoning}</Paragraph>
+          <Tracklist tracks={outcome.tracks} />
+        </>
+      )}
+      {!isLoading && outcome?.status === 'ok' && outcome.tracks.length === 0 && (
+        <Paragraph $color="muted">
+          No matching tracks found. Try describing it differently.
+        </Paragraph>
+      )}
     </FlexCol>
   );
 }

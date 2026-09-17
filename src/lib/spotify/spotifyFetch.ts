@@ -17,13 +17,16 @@ export async function spotifyFetch<T>(path: string): Promise<T> {
 }
 
 async function errorMessage(response: Response): Promise<string> {
+  const retryAfter = response.headers.get('Retry-After');
+  const retrySuffix = retryAfter ? ` (retry after ${retryAfter}s)` : '';
+
   try {
     const body = (await response.json()) as { error?: { message?: string } };
 
     if (body.error?.message) {
-      return `Spotify: ${body.error.message}`;
+      return `Spotify: ${body.error.message}${retrySuffix}`;
     }
   } catch {}
 
-  return `Spotify request failed (${response.status}).`;
+  return `Spotify request failed (${response.status}).${retrySuffix}`;
 }

@@ -1,9 +1,14 @@
+import { MOCK_TRACKS } from './mockTracks';
 import { searchTrack } from './searchTrack';
 import type { Track, TrackQuery } from './types';
 
 const BATCH_SIZE = 5;
 
+const useMockTracks = process.env.SPOTIFY_MOCK_SEARCH === 'true';
+
 export async function searchTracks(queries: TrackQuery[]): Promise<Track[]> {
+  if (useMockTracks) return MOCK_TRACKS;
+
   const tracks: Track[] = [];
 
   for (let start = 0; start < queries.length; start += BATCH_SIZE) {

@@ -30,11 +30,13 @@ export const theme = {
     toast: '#16181d',
     toastText: '#ffffff',
     backdrop: 'rgba(22, 24, 29, 0.5)',
+
+    skeleton: 'rgba(22, 24, 29, 0.08)',
   },
 
   fonts: {
-    display: 'var(--font-display), system-ui, sans-serif',
-    body: 'var(--font-body), system-ui, sans-serif',
+    display: 'var(--font-sans), system-ui, sans-serif',
+    body: 'var(--font-sans), system-ui, sans-serif',
   },
 
   fontSizes: {

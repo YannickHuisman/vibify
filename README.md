@@ -34,14 +34,14 @@ Other scripts: `pnpm typecheck`, `pnpm lint`, `pnpm build`.
 
 The prompt is posted to `/api/discover`. From there:
 
-1. Claude gets the prompt and has to answer with a tool call. Either `suggest_tracks` with 15
+1. Claude gets the prompt and has to answer with a tool call. Either `suggest_tracks` with 12
    artist/track pairs, or `reject_prompt` when there is no mood in the request to work with.
 2. Zod parses the tool input. A malformed call fails the request instead of getting patched up.
 3. Each suggestion is looked up through Spotify's `/search`, five at a time. Anything that does not
    resolve is dropped.
 4. What survives is deduped by track id and capped at 10.
 
-Asking for 15 and showing 10 is deliberate. The model invents a track now and then, and Spotify does
+Asking for 12 and showing 10 is deliberate. The model invents a track now and then, and Spotify does
 not carry everything, so the overshoot covers the misses without leaving a half-empty list.
 
 ## Decisions

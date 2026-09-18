@@ -11,7 +11,7 @@ export function TrackSkeleton() {
       <FlexRow $gap="sm" $align="center" $minWidth="0">
         <Skeleton $width="40px" $height="40px" $radius="6px" />
 
-        <FlexCol $gap="xs" $minWidth="0">
+        <FlexCol $gap="xs" $minWidth="250px">
           <Skeleton $width="70%" $height="14px" />
           <Skeleton $width="45%" $height="12px" />
         </FlexCol>

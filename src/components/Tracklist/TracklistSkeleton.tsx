@@ -1,7 +1,7 @@
 import { FlexCol } from '@components/Flex';
 import { TrackSkeleton } from '@components/Track';
 
-const SKELETON_ROW_COUNT = 20;
+const SKELETON_ROW_COUNT = 10;
 
 export function TracklistSkeleton() {
   return (

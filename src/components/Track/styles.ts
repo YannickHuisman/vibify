@@ -9,6 +9,7 @@ const trackRowGrid = css`
   gap: ${({ theme }) => theme.space.md};
   width: 100%;
   padding: ${({ theme }) => theme.space.sm} ${({ theme }) => theme.space.md};
+  border-radius: ${({ theme }) => theme.radius.sm};
 
   ${belowMobile} {
     grid-template-columns: 32px 1fr 64px;
@@ -18,7 +19,6 @@ const trackRowGrid = css`
 export const StyledTrackRow = styled.button<{ $open: boolean }>`
   ${buttonReset}
   ${trackRowGrid}
-  border-radius: ${({ theme }) => theme.radius.sm};
   text-align: left;
   transition: background ${({ theme }) => theme.durations.fast};
 
@@ -37,6 +37,7 @@ export const StyledTrackRow = styled.button<{ $open: boolean }>`
 
 export const StyledTrackSkeletonRow = styled.div`
   ${trackRowGrid}
+  background: ${({ theme }) => theme.colors.surfaceSoft};
 `;
 
 export const StyledTrackImageFrame = styled.div`
